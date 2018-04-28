@@ -110,9 +110,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Measurer4000.Core2\Measurer4000.Core2.csproj">
-      <Project>{12fbb115-206f-4d4d-a78c-7fd9a4af8ba9}</Project>
-      <Name>Measurer4000.Core2</Name>
+    <ProjectReference Include="..\Measurer4000.Core\Measurer4000.Core.csproj">
+      <Project>{8047e66c-7a46-4602-8420-c12f8bf65ae6}</Project>
+      <Name>Measurer4000.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
