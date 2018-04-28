@@ -5,27 +5,27 @@ namespace Measurer4000.Core.Services
 {
     public static class ServiceLocator
     {
-        private static Dictionary<Type, object> _services = new Dictionary<Type, object>();
+        private static readonly Dictionary<Type, object> Services = new Dictionary<Type, object>();
 
         public static T Get<T>()
         {
-            if(_services.ContainsKey(typeof(T)))
+            if(Services.ContainsKey(typeof(T)))
             {
-                return (T)_services[typeof(T)];
+                return (T)Services[typeof(T)];
             }
 
-            throw new Exception($"Service {typeof(T)} not register");
+            throw new Exception($"Service {typeof(T)} not registered");
         }
 
         public static void Register<T>(T implementation)
         {
-            if(!_services.ContainsKey(typeof(T)))
+            if(!Services.ContainsKey(typeof(T)))
             {
-                _services.Add(typeof(T), implementation);
+                Services.Add(typeof(T), implementation);
             }
             else
             {
-                _services[typeof(T)] = implementation;
+                Services[typeof(T)] = implementation;
             }
         }
     }

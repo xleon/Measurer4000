@@ -70,7 +70,7 @@ namespace Measurer4000.Command
 \_|  |_/\____/\_| |_/\____/  \___/ \_| \_|\____/ \_| \_|     |_/ \___/  \___/  \___/ 
                                                                                      
 => https://github.com/jmmortega/Measurer4000");
-            Console.WriteLine(@"Sample: Measurer4000 -json -complete SolutionPath.sln 
+            Console.WriteLine(@"Sample: dotnet Measurer4000.dll -json -complete SolutionPath.sln 
 -json: To receive json file with measurer data 
 -complete: To receive all data about measuring 
 SolutionPath don't forget .sln extension!");
