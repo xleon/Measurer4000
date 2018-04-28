@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Measurer4000.Core\Measurer4000.Core.csproj" />
+    <ProjectReference Include="..\Measurer4000.Core2\Measurer4000.Core2.csproj" />
   </ItemGroup>
 
 </Project>
