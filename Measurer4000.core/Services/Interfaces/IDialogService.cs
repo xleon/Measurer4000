@@ -1,5 +1,5 @@
-﻿using Measurer4000.Core.Models;
-using System;
+﻿using System;
+using Measurer4000.Core.Models;
 
 namespace Measurer4000.Core.Services.Interfaces
 {

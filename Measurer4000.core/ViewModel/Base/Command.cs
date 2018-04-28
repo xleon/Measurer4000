@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Measurer4000.Core.ViewModels.Base
+namespace Measurer4000.Core.ViewModel.Base
 {
     public class Command : ICommand
     {
-        private Action _actionToExecute;
+        private readonly Action _actionToExecute;
 
         public Command(Action action)
         {
@@ -31,7 +27,7 @@ namespace Measurer4000.Core.ViewModels.Base
 
     public class Command<T> : ICommand
     {        
-        private Action<T> _actionToExecute;
+        private readonly Action<T> _actionToExecute;
 
         public Command(Action<T> action)
         {

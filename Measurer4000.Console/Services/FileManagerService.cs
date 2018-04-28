@@ -1,5 +1,5 @@
-﻿using Measurer4000.Core.Services.Interfaces;
-using System.IO;
+﻿using System.IO;
+using Measurer4000.Core.Services.Interfaces;
 
 namespace Measurer4000.Command.Services
 {

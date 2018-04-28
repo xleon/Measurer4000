@@ -1,14 +1,13 @@
-﻿using Measurer4000.Core.Models;
+﻿using System.Windows.Input;
+using Measurer4000.Core.Models;
 using Measurer4000.Core.Services;
-using Measurer4000.Core.Utils;
 using Measurer4000.Core.Services.Interfaces;
-using System;
-using System.Windows.Input;
-using Measurer4000.Core.ViewModels.Base;
+using Measurer4000.Core.Utils;
+using Measurer4000.Core.ViewModel.Base;
 using OxyPlot;
 using OxyPlot.Series;
 
-namespace Measurer4000.Core.ViewModels
+namespace Measurer4000.Core.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
@@ -25,7 +24,7 @@ namespace Measurer4000.Core.ViewModels
 
         public bool IsBusy
         {
-            get { return _isBusy; }
+            get => _isBusy;
             set
             {
                 _isBusy = value;
@@ -41,8 +40,8 @@ namespace Measurer4000.Core.ViewModels
 
 		public PlotModel AndroidPlotModel
 		{
-			get { return _androidPlotModel; }
-			set
+			get => _androidPlotModel;
+		    set
 			{
 				_androidPlotModel = value;
 				RaiseProperty();
@@ -53,7 +52,7 @@ namespace Measurer4000.Core.ViewModels
 
         public PlotModel IosPlotModel
         {
-            get { return _iosPlotModel; }
+            get => _iosPlotModel;
             set
             {
                 _iosPlotModel = value;
@@ -65,7 +64,7 @@ namespace Measurer4000.Core.ViewModels
 
         public PlotModel UwpPlotModel
         {
-			get { return _uwpPlotModel; }
+			get => _uwpPlotModel;
             set
             {
 				_uwpPlotModel = value;
@@ -80,8 +79,8 @@ namespace Measurer4000.Core.ViewModels
                 return new Command(() =>
                 {
                     _fileDialogService.OpenFileDialog(
-                        (solutionPath) => OpenSolutionPath(solutionPath),
-                        (error) => _fileDialogService.CreateDialog(EnumTypeDialog.Error, error.Message));                        
+                        OpenSolutionPath,
+                        error => _fileDialogService.CreateDialog(EnumTypeDialog.Error, error.Message));                        
                 });
             }
         }
@@ -119,8 +118,8 @@ namespace Measurer4000.Core.ViewModels
             RaiseProperty(nameof(Stats));
             
             CreateAndroidPlot(_currentSolution.Stats);
-            CreateIOSPlot(_currentSolution.Stats);
-            CreateUWPPlot(_currentSolution.Stats);
+            CreateIosPlot(_currentSolution.Stats);
+            CreateUwpPlot(_currentSolution.Stats);
 
             IsBusy = false;
             _fileDialogService.CreateDialog(EnumTypeDialog.Information
@@ -128,7 +127,7 @@ namespace Measurer4000.Core.ViewModels
                     , "Sharing");
         }
 
-        private void CreateIOSPlot(CodeStats codeStats)
+        private void CreateIosPlot(CodeStats codeStats)
         {
             IosPlotModel = new PlotModel
             {
@@ -143,8 +142,8 @@ namespace Measurer4000.Core.ViewModels
                 StartAngle = 0
             };
 
-            pieSlice.Slices.Add(new PieSlice("Share", codeStats.ShareCodeIniOS) { IsExploded = true, Fill = OxyColors.Green });
-            pieSlice.Slices.Add(new PieSlice("Specific", codeStats.iOSSpecificCode) { IsExploded = true, Fill = OxyColors.Red });
+            pieSlice.Slices.Add(new PieSlice("Share", codeStats.ShareCodeIniOs) { IsExploded = true, Fill = OxyColors.Green });
+            pieSlice.Slices.Add(new PieSlice("Specific", codeStats.IOsSpecificCode) { IsExploded = true, Fill = OxyColors.Red });
 
             IosPlotModel.Series.Add(pieSlice);
         }
@@ -170,7 +169,7 @@ namespace Measurer4000.Core.ViewModels
             AndroidPlotModel.Series.Add(pieSlice);
         }
 
-        private void CreateUWPPlot(CodeStats codeStats)
+        private void CreateUwpPlot(CodeStats codeStats)
         {
             UwpPlotModel = new PlotModel
             {
@@ -185,8 +184,8 @@ namespace Measurer4000.Core.ViewModels
                 StartAngle = 0
             };
 
-            pieSlice.Slices.Add(new PieSlice("Share", codeStats.ShareCodeInUWP) { IsExploded = true, Fill = OxyColors.Green });
-            pieSlice.Slices.Add(new PieSlice("Specific", codeStats.UWPSpecificCode) { IsExploded = true, Fill = OxyColors.Red });
+            pieSlice.Slices.Add(new PieSlice("Share", codeStats.ShareCodeInUwp) { IsExploded = true, Fill = OxyColors.Green });
+            pieSlice.Slices.Add(new PieSlice("Specific", codeStats.UwpSpecificCode) { IsExploded = true, Fill = OxyColors.Red });
 
             UwpPlotModel.Series.Add(pieSlice);
         }

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using AppKit;
 using Foundation;
-using Measurer4000.Core.ViewModels;
+using Measurer4000.Core.ViewModel;
 
 namespace Measurer4000.mac
 {
@@ -27,7 +28,7 @@ namespace Measurer4000.mac
             _dataContext.PropertyChanged += DataContextPropertyChanged;            
         }
 
-        private void DataContextPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void DataContextPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == "IsBusy")
             {
@@ -58,10 +59,7 @@ namespace Measurer4000.mac
             base.WindowDidLoad();
         }
         
-        public new MainWindow Window
-        {
-            get { return (MainWindow)base.Window; }
-        }
+        public new MainWindow Window => (MainWindow)base.Window;
 
         partial void ButtonOpenFileClick(NSObject sender)
         {
@@ -78,8 +76,8 @@ namespace Measurer4000.mac
             AmountOfFiles.StringValue = _dataContext.Stats.AmountOfFiles.ToString();
 			CodeFiles.StringValue = _dataContext.Stats.CodeFiles.ToString();
 			TotalLOC.StringValue = _dataContext.Stats.TotalLinesOfCode.ToString();
-            TotalUILines.StringValue = _dataContext.Stats.TotalLinesOfUI.ToString();
-            UIFiles.StringValue = _dataContext.Stats.UIFiles.ToString();                     
+            TotalUILines.StringValue = _dataContext.Stats.TotalLinesOfUi.ToString();
+            UIFiles.StringValue = _dataContext.Stats.UiFiles.ToString();                     
 
 			CoreLOC.StringValue = _dataContext.Stats.TotalLinesCore.ToString();
 
@@ -88,15 +86,15 @@ namespace Measurer4000.mac
 			ShareCodeInAndroid.StringValue = _dataContext.Stats.ShareCodeInAndroid.ToString("F2", CultureInfo.InvariantCulture);
 			AndroidSpecificCode.StringValue = _dataContext.Stats.AndroidSpecificCode.ToString("F2", CultureInfo.InvariantCulture);         
             
-            iOSFiles.StringValue = _dataContext.Stats.iOSFiles.ToString();
-            iOSLOC.StringValue = _dataContext.Stats.TotalLinesIniOS.ToString();
-			ShareCodeIniOS.StringValue = _dataContext.Stats.ShareCodeIniOS.ToString("F2", CultureInfo.InvariantCulture);
-			iOSSpecificCode.StringValue = _dataContext.Stats.iOSSpecificCode.ToString("F2", CultureInfo.InvariantCulture);
+            iOSFiles.StringValue = _dataContext.Stats.IOsFiles.ToString();
+            iOSLOC.StringValue = _dataContext.Stats.TotalLinesIniOs.ToString();
+			ShareCodeIniOS.StringValue = _dataContext.Stats.ShareCodeIniOs.ToString("F2", CultureInfo.InvariantCulture);
+			iOSSpecificCode.StringValue = _dataContext.Stats.IOsSpecificCode.ToString("F2", CultureInfo.InvariantCulture);
 
-			UWPFiles.StringValue = _dataContext.Stats.UWPFiles.ToString();
-			UWPLOC.StringValue = _dataContext.Stats.TotalLinesInUWP.ToString();
-			ShareCodeInUWP.StringValue = _dataContext.Stats.ShareCodeInUWP.ToString("F2", CultureInfo.InvariantCulture);
-			UWPSpecificCode.StringValue = _dataContext.Stats.UWPSpecificCode.ToString("F2", CultureInfo.InvariantCulture);
+			UWPFiles.StringValue = _dataContext.Stats.UwpFiles.ToString();
+			UWPLOC.StringValue = _dataContext.Stats.TotalLinesInUwp.ToString();
+			ShareCodeInUWP.StringValue = _dataContext.Stats.ShareCodeInUwp.ToString("F2", CultureInfo.InvariantCulture);
+			UWPSpecificCode.StringValue = _dataContext.Stats.UwpSpecificCode.ToString("F2", CultureInfo.InvariantCulture);
         }
     }
 }

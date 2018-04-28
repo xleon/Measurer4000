@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }
 
-        public long LOC { get; set; }
+        public long Loc { get; set; }
 
         public bool IsUserInterface { get; set; }
 
@@ -15,7 +15,7 @@
         public override string ToString()
         {
             return $@"Name: {Name} 
-                    LOC: {LOC} 
+                    LOC: {Loc} 
                     UI: {IsUserInterface} 
                     TypeFile: {TypeFile} 
                     Path: {Path}";                

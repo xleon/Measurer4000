@@ -1,7 +1,7 @@
-﻿using Measurer4000.Services;
+﻿using System.Windows;
 using Measurer4000.Core.Services;
-using System.Windows;
 using Measurer4000.Core.Services.Interfaces;
+using Measurer4000.Services;
 
 namespace Measurer4000
 {
@@ -14,7 +14,7 @@ namespace Measurer4000
         {
             ServiceLocator.Register<IDialogService>(new FileDialogService());
             ServiceLocator.Register<IMeasurerService>(new MeasureService(new FileManagerService()));
-            ServiceLocator.Register<IWebBrowserTaskService>(new WebBrowserWPFTaskService());
+            ServiceLocator.Register<IWebBrowserTaskService>(new WebBrowserWpfTaskService());
         }
         
     }

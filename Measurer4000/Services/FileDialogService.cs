@@ -1,11 +1,8 @@
-﻿using Measurer4000.Core.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using Measurer4000.Core.Models;
+using Measurer4000.Core.Services.Interfaces;
+using Microsoft.Win32;
 
 namespace Measurer4000.Services
 {
@@ -15,7 +12,7 @@ namespace Measurer4000.Services
         {
             try
             {
-                Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
+                var fileDialog = new OpenFileDialog();
                 fileDialog.Filter = "Solution Files (*.sln)|*.sln";
 
                 if (fileDialog.ShowDialog() == true)

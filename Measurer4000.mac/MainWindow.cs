@@ -1,7 +1,6 @@
 ﻿using System;
-
-using Foundation;
 using AppKit;
+using Foundation;
 
 namespace Measurer4000.mac
 {

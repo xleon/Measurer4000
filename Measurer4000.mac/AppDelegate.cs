@@ -9,11 +9,7 @@ namespace Measurer4000.mac
     [Register("AppDelegate")]
     public class AppDelegate : NSApplicationDelegate
     {
-        MainWindowController mainWindowController;
-
-        public AppDelegate()
-        {
-        }
+        MainWindowController _mainWindowController;
 
         public override void DidFinishLaunching(NSNotification notification)
         {
@@ -21,8 +17,8 @@ namespace Measurer4000.mac
             ServiceLocator.Register<IMeasurerService>(new MeasureService(new FileManagerService()));
             ServiceLocator.Register<IWebBrowserTaskService>(new WebBrowserMacTaskService());
 
-            mainWindowController = new MainWindowController();
-            mainWindowController.Window.MakeKeyAndOrderFront(this);
+            _mainWindowController = new MainWindowController();
+            _mainWindowController.Window.MakeKeyAndOrderFront(this);
         }
 
         public override void WillTerminate(NSNotification notification)

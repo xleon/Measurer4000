@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Measurer4000.Core.ViewModels.Base
+namespace Measurer4000.Core.ViewModel.Base
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

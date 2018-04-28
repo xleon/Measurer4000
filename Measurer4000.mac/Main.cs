@@ -1,6 +1,4 @@
 ﻿using AppKit;
-using Measurer4000.Core.Services;
-using Measurer4000.mac.Services;
 
 namespace Measurer4000.mac
 {

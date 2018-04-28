@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using Measurer4000.Core.Services.Interfaces;
+﻿using System.IO;
 using Foundation;
+using Measurer4000.Core.Services.Interfaces;
 
 namespace Measurer4000.mac.Services
 {

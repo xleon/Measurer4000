@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using Measurer4000.Core.ViewModels;
+using Measurer4000.Core.ViewModel;
 
 namespace Measurer4000
 {

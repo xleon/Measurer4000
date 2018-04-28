@@ -1,5 +1,4 @@
 ﻿using Measurer4000.Core.Models;
-using System.Collections.Generic;
 
 namespace Measurer4000.Core.Services.Interfaces
 {
@@ -7,6 +6,6 @@ namespace Measurer4000.Core.Services.Interfaces
     {
         Solution GetProjects(string filePathToSolution);
 
-        Solution Measure(Solution SolutionProjects);
+        Solution Measure(Solution solutionProjects);
     }
 }

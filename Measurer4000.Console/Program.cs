@@ -1,12 +1,11 @@
-﻿using Measurer4000.Command.Services;
+﻿using System;
+using System.IO;
+using System.Linq;
+using Measurer4000.Command.Services;
 using Measurer4000.Core.Models;
 using Measurer4000.Core.Services;
 using Measurer4000.Core.Services.Interfaces;
 using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Linq;
-
 
 namespace Measurer4000.Command
 {

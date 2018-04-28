@@ -1,6 +1,8 @@
-﻿namespace Measurer4000.mac
+﻿using Foundation;
+
+namespace Measurer4000.mac
 {
-    [global::Foundation.Register("MainWindow")]
+    [Register("MainWindow")]
     public partial class MainWindow
     {
     }

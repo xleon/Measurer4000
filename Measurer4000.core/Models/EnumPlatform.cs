@@ -4,8 +4,8 @@
     {
         Core,
         Android,
-        iOS,
-        UWP,
+        IOs,
+        Uwp,
         None
     }
 }

@@ -1,8 +1,9 @@
-﻿using Measurer4000.Core.Models;
-using Measurer4000.Core.Services.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using Measurer4000.Core.Models;
+using Measurer4000.Core.Services.Interfaces;
 
 namespace Measurer4000.Core.Utils
 {
@@ -19,14 +20,14 @@ namespace Measurer4000.Core.Utils
                 solutionReader = new StreamReader(File.OpenRead(filePathToSolution)); 
                 while(!solutionReader.EndOfStream)
                 {
-                    string line = solutionReader.ReadLine();
+                    var line = solutionReader.ReadLine();
 					if (line.StartsWith("Project") && line.Contains(".csproj")) projects.Add(line);
-                    System.Diagnostics.Debug.WriteLine(line+(line.StartsWith("Project")?" is project":" isnt project"));
+                    Debug.WriteLine(line+(line.StartsWith("Project")?" is project":" isnt project"));
                 }                
             }
             catch(Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
             }
             finally
             {
@@ -44,10 +45,10 @@ namespace Measurer4000.Core.Utils
                         
             foreach(var projectLine in projectLines)
             {
-                string thatINeed = projectLine.Split('=')[1].Trim();
-                string[] thatINeedSplitted = thatINeed.Split(',');
+                var thatINeed = projectLine.Split('=')[1].Trim();
+                var thatINeedSplitted = thatINeed.Split(',');
 
-                projects.Add(new Project()
+                projects.Add(new Project
                 {
                     Name = thatINeedSplitted[0].Trim().Trim('"'),
                     Path = thatINeedSplitted[1].Trim().Trim('"').Replace("\\", "/")
@@ -67,7 +68,7 @@ namespace Measurer4000.Core.Utils
 
                 while(!projectReader.EndOfStream)
                 {
-                    string line = projectReader.ReadLine();
+                    var line = projectReader.ReadLine();
                     if (project.Platform == EnumPlatform.None)
                     {
                         project.Platform = ThisLineDeterminePlatform(line);
@@ -79,15 +80,15 @@ namespace Measurer4000.Core.Utils
                         {
                             project.Files.Add(WellSmellsLikeFile(line, Path.GetDirectoryName(
                                 (Path.Combine(Path.GetDirectoryName(pathToSolution), project.Path)))));
-                            System.Diagnostics.Debug.WriteLine(line + (project.Files[project.Files.Count-1].IsUserInterface ? " is" : " isnt")+" UI");
+                            Debug.WriteLine(line + (project.Files[project.Files.Count-1].IsUserInterface ? " is" : " isnt")+" UI");
                         }                     
                     }
                 }
-                System.Diagnostics.Debug.WriteLine(project.Name + " is " + project.Platform);
+                Debug.WriteLine(project.Name + " is " + project.Platform);
             }
             catch(Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
             }
             finally
             {
@@ -102,27 +103,28 @@ namespace Measurer4000.Core.Utils
 
         private static EnumPlatform ThisLineDeterminePlatform(string line)
         {
-			if(line.ToLower().Contains("androidmanifest.xml"))
+            if(line.ToLower().Contains("androidmanifest.xml"))
             {
                 return EnumPlatform.Android;
             }
-            else if(line.ToLower().Contains("mtouch"))
+
+            if(line.ToLower().Contains("mtouch"))
             {
-                return EnumPlatform.iOS;
+                return EnumPlatform.IOs;
             }
-			else if (line.ToLower().Contains("<targetplatformidentifier>uap</targetplatformidentifier>"))
+
+            if (line.ToLower().Contains("<targetplatformidentifier>uap</targetplatformidentifier>"))
             {
-				return EnumPlatform.UWP;
+                return EnumPlatform.Uwp;
             }         
             //I suppose only have PCL libraries in core project. (Obviously?)
-            else if(line.ToLower().Contains("targetframeworkprofile"))
+
+            if(line.ToLower().Contains("targetframeworkprofile"))
             {
                 return EnumPlatform.Core;
             }
-            else
-            {
-                return EnumPlatform.None;
-            }
+
+            return EnumPlatform.None;
         }
 
         private static bool ItsAValidFile(string fileLine)
@@ -132,9 +134,9 @@ namespace Measurer4000.Core.Utils
 
         private static ProgrammingFile WellSmellsLikeFile(string includeFileLine, string projectsPath)
         {                        
-            string pathFile = includeFileLine.Split('=')[1].Trim('>').Trim('/').Trim('"').Trim().Trim('"');
+            var pathFile = includeFileLine.Split('=')[1].Trim('>').Trim('/').Trim('"').Trim().Trim('"');
 
-            return new ProgrammingFile()
+            return new ProgrammingFile
             {
                 Name = pathFile,
                 Path = Path.Combine(projectsPath, pathFile),

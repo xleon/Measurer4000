@@ -10,41 +10,43 @@ namespace Measurer4000.Core.Utils
 	public static class MeasureUtils
     {
         public static IFileManagerService File;
-        public static long CalculateLOC(ProgrammingFile programmingFile)
+
+        public static long CalculateLoc(ProgrammingFile programmingFile)
         {
-            if(programmingFile.TypeFile == EnumTypeFile.AXML)
+            if(programmingFile.TypeFile == EnumTypeFile.Axml)
             {
-                return CalculateLOCAxml(programmingFile);
+                return CalculateLocAxml(programmingFile);
             }
-            else if(programmingFile.TypeFile == EnumTypeFile.CSharp)
+
+            if(programmingFile.TypeFile == EnumTypeFile.CSharp)
             {
-                return CalculateLOCSharp(programmingFile);
+                return CalculateLocSharp(programmingFile);
             }
-            else if(programmingFile.TypeFile == EnumTypeFile.XAML)
+
+            if(programmingFile.TypeFile == EnumTypeFile.Xaml)
             {
-                return CalculateLOCXaml(programmingFile);
+                return CalculateLocXaml(programmingFile);
             }
-            else if (programmingFile.TypeFile == EnumTypeFile.Xib)
+
+            if (programmingFile.TypeFile == EnumTypeFile.Xib)
             {
-                return CalculateLOCXib(programmingFile);
+                return CalculateLocXib(programmingFile);
             }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine($"File not recognized {programmingFile.Path}");
-                return 0;
-            }
+
+            Debug.WriteLine($"File not recognized {programmingFile.Path}");
+            return 0;
         }
 
-        private static long CalculateLOCSharp(ProgrammingFile programmingFile)
+        private static long CalculateLocSharp(ProgrammingFile programmingFile)
         {
             StreamReader reader = null;
-            int count = 0;
-            int inComment = 0;
+            var count = 0;
+            var inComment = 0;
 
             try
             {
                 reader = new StreamReader(File.OpenRead(programmingFile.Path));
-                string line = string.Empty;
+                var line = string.Empty;
                 while ((line = reader.ReadLine()) != null)
                 {
                     if(IsRealCodeCSharp(line.Trim(), ref inComment))
@@ -55,29 +57,26 @@ namespace Measurer4000.Core.Utils
             }
             catch(Exception e)
             {
-                System.Diagnostics.Debug.WriteLine($"Error: {e.Message}");
+                Debug.WriteLine($"Error: {e.Message}");
             }
             finally
             {
-                if(reader != null)
-                {
-                    reader.Dispose();
-                }
+                reader?.Dispose();
             }
 
             return count;
         }
 
-        private static long CalculateLOCXaml(ProgrammingFile programmingFile)
+        private static long CalculateLocXaml(ProgrammingFile programmingFile)
         {
             StreamReader reader = null;
-            int count = 0;
-            int inComment = 0;
+            var count = 0;
+            var inComment = 0;
 
             try
             {
                 reader = new StreamReader(File.OpenRead(programmingFile.Path));
-                string line = string.Empty;
+                var line = string.Empty;
                 while ((line = reader.ReadLine()) != null)
                 {
                     if (IsRealCodeXaml(line.Trim(), ref inComment))
@@ -88,7 +87,7 @@ namespace Measurer4000.Core.Utils
             }
             catch(Exception e)
             {
-                System.Diagnostics.Debug.WriteLine($"Error: {e.Message}");
+                Debug.WriteLine($"Error: {e.Message}");
             }
             finally
             {
@@ -102,14 +101,14 @@ namespace Measurer4000.Core.Utils
         
         }
 
-        private static long CalculateLOCAxml(ProgrammingFile programmingFile)
+        private static long CalculateLocAxml(ProgrammingFile programmingFile)
         {
-            return CalculateLOCXaml(programmingFile);
+            return CalculateLocXaml(programmingFile);
         }
 
-        private static long CalculateLOCXib(ProgrammingFile programmingFile)
+        private static long CalculateLocXib(ProgrammingFile programmingFile)
         {
-            return CalculateLOCXaml(programmingFile);
+            return CalculateLocXaml(programmingFile);
         }
 
         private static bool IsRealCodeAxml(string line, ref int inComment)
@@ -123,12 +122,14 @@ namespace Measurer4000.Core.Utils
             {
                 return false;
             }
-            else if(line.StartsWith("<!--"))
+
+            if(line.StartsWith("<!--"))
             {
                 inComment++;
                 return false;
             }
-            else if(line.EndsWith("-->"))
+
+            if(line.EndsWith("-->"))
             {
                 inComment--;
                 return false;
@@ -151,12 +152,14 @@ namespace Measurer4000.Core.Utils
             {
                 return false;
             }
-            else if (line.StartsWith("/*"))
+
+            if (line.StartsWith("/*"))
             {
                 inComment++;
                 return false;
             }
-            else if(line.EndsWith("*/"))
+
+            if(line.EndsWith("*/"))
             {
                 inComment--;
                 return false;
@@ -174,51 +177,51 @@ namespace Measurer4000.Core.Utils
             || line.StartsWith("protected"));
         } 
 
-        public static CodeStats CalculateStats(Solution _currentSolution)
+        public static CodeStats CalculateStats(Solution currentSolution)
         {
-			var files = _currentSolution.Projects.Where(x => x.Platform == EnumPlatform.Android).SelectMany(x => x.Files);
+			var files = currentSolution.Projects.Where(x => x.Platform == EnumPlatform.Android).SelectMany(x => x.Files);
 
 			foreach (var item in files)
 			{
 				Debug.WriteLine($"file: {item.Name}");
 			}
 
-			var stats = new CodeStats()
-            {
-				ShareCodeInAndroid = CalculateShareCodePerPlaform(_currentSolution, EnumPlatform.Android),
+			var stats = new CodeStats
+			{
+				ShareCodeInAndroid = CalculateShareCodePerPlaform(currentSolution, EnumPlatform.Android),
                 
 				AndroidFiles = files.Count(),
-				TotalLinesInAndroid = _currentSolution.Projects.Where(x => x.Platform == EnumPlatform.Android).SelectMany(x => x.Files).Sum(x => x.LOC),
+				TotalLinesInAndroid = currentSolution.Projects.Where(x => x.Platform == EnumPlatform.Android).SelectMany(x => x.Files).Sum(x => x.Loc),
 
-				ShareCodeIniOS = CalculateShareCodePerPlaform(_currentSolution, EnumPlatform.iOS),
-				iOSFiles = _currentSolution.Projects.Where(x => x.Platform == EnumPlatform.iOS).SelectMany(x => x.Files).Count(),
-				TotalLinesIniOS = _currentSolution.Projects.Where(x => x.Platform == EnumPlatform.iOS).SelectMany(x => x.Files).Sum(x => x.LOC),
+				ShareCodeIniOs = CalculateShareCodePerPlaform(currentSolution, EnumPlatform.IOs),
+				IOsFiles = currentSolution.Projects.Where(x => x.Platform == EnumPlatform.IOs).SelectMany(x => x.Files).Count(),
+				TotalLinesIniOs = currentSolution.Projects.Where(x => x.Platform == EnumPlatform.IOs).SelectMany(x => x.Files).Sum(x => x.Loc),
 
-				ShareCodeInUWP = CalculateShareCodePerPlaform(_currentSolution, EnumPlatform.UWP),
-				UWPFiles = _currentSolution.Projects.Where(x => x.Platform == EnumPlatform.UWP).SelectMany(x => x.Files).Count(),
-				TotalLinesInUWP = _currentSolution.Projects.Where(x => x.Platform == EnumPlatform.UWP).SelectMany(x => x.Files).Sum(x => x.LOC),
+				ShareCodeInUwp = CalculateShareCodePerPlaform(currentSolution, EnumPlatform.Uwp),
+				UwpFiles = currentSolution.Projects.Where(x => x.Platform == EnumPlatform.Uwp).SelectMany(x => x.Files).Count(),
+				TotalLinesInUwp = currentSolution.Projects.Where(x => x.Platform == EnumPlatform.Uwp).SelectMany(x => x.Files).Sum(x => x.Loc),
 
-                AmountOfFiles = _currentSolution.Projects.SelectMany(p => p.Files).Count(),
-                CodeFiles = _currentSolution.Projects.SelectMany(x => x.Files).Count(x => x.IsUserInterface == false),
-                UIFiles = _currentSolution.Projects.SelectMany(x => x.Files).Count(x => x.IsUserInterface == true),
-                TotalLinesOfCode = _currentSolution.Projects.SelectMany(x => x.Files).Where(x => x.IsUserInterface == false).Sum(x => x.LOC),
-                TotalLinesOfUI = _currentSolution.Projects.SelectMany(x => x.Files).Where(x => x.IsUserInterface == true).Sum(x => x.LOC),
-                TotalLinesCore = _currentSolution.Projects.Where(x => x.Platform == EnumPlatform.Core).SelectMany(x => x.Files).Sum(x => x.LOC),            
+                AmountOfFiles = currentSolution.Projects.SelectMany(p => p.Files).Count(),
+                CodeFiles = currentSolution.Projects.SelectMany(x => x.Files).Count(x => x.IsUserInterface == false),
+                UiFiles = currentSolution.Projects.SelectMany(x => x.Files).Count(x => x.IsUserInterface),
+                TotalLinesOfCode = currentSolution.Projects.SelectMany(x => x.Files).Where(x => x.IsUserInterface == false).Sum(x => x.Loc),
+                TotalLinesOfUi = currentSolution.Projects.SelectMany(x => x.Files).Where(x => x.IsUserInterface).Sum(x => x.Loc),
+                TotalLinesCore = currentSolution.Projects.Where(x => x.Platform == EnumPlatform.Core).SelectMany(x => x.Files).Sum(x => x.Loc)            
             };
 
-            stats.iOSSpecificCode = Math.Round(100 - stats.ShareCodeIniOS, 2);
+            stats.IOsSpecificCode = Math.Round(100 - stats.ShareCodeIniOs, 2);
             stats.AndroidSpecificCode = Math.Round(100 - stats.ShareCodeInAndroid, 2);
-			stats.UWPSpecificCode = Math.Round(100 - stats.ShareCodeInUWP, 2);
+			stats.UwpSpecificCode = Math.Round(100 - stats.ShareCodeInUwp, 2);
 
             return stats;
         }
 
-		private static double CalculateShareCodePerPlaform(Solution _currentSolution, EnumPlatform _selectedPlatform)
+		private static double CalculateShareCodePerPlaform(Solution currentSolution, EnumPlatform selectedPlatform)
 		{
-			var totalCoreLOC = _currentSolution.Projects.Where(x => x.Platform == EnumPlatform.Core).SelectMany(x => x.Files).Where(x => x.IsUserInterface == false).Sum(x => x.LOC);
-			var platformSpecificLOC = _currentSolution.Projects.Where(x => x.Platform == _selectedPlatform).SelectMany(x => x.Files).Where(x => x.IsUserInterface == false).Sum(x => x.LOC);
+			var totalCoreLoc = currentSolution.Projects.Where(x => x.Platform == EnumPlatform.Core).SelectMany(x => x.Files).Where(x => x.IsUserInterface == false).Sum(x => x.Loc);
+			var platformSpecificLoc = currentSolution.Projects.Where(x => x.Platform == selectedPlatform).SelectMany(x => x.Files).Where(x => x.IsUserInterface == false).Sum(x => x.Loc);
 
-			return Math.Round(((double) totalCoreLOC / (platformSpecificLOC + totalCoreLOC)) * 100, 2);
+			return Math.Round(((double) totalCoreLoc / (platformSpecificLoc + totalCoreLoc)) * 100, 2);
 		}
     }
 }

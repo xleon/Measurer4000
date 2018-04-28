@@ -4,8 +4,9 @@
 // actions made in the UI designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
+
+using AppKit;
 using Foundation;
-using System.CodeDom.Compiler;
 
 namespace Measurer4000.mac
 {
@@ -13,79 +14,79 @@ namespace Measurer4000.mac
 	partial class MainWindowController
 	{
 		[Outlet]
-		AppKit.NSTextField AmountOfFiles { get; set; }
+		NSTextField AmountOfFiles { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField AndroidFiles { get; set; }
+		NSTextField AndroidFiles { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField AndroidLOC { get; set; }
+		NSTextField AndroidLOC { get; set; }
 
 		[Outlet]
-		AppKit.NSButton ButtonOpenFile { get; set; }
+		NSButton ButtonOpenFile { get; set; }
 
 		[Outlet]
-		AppKit.NSButton ButtonShareLink { get; set; }
+		NSButton ButtonShareLink { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField CodeFiles { get; set; }
+		NSTextField CodeFiles { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField CoreLOC { get; set; }
+		NSTextField CoreLOC { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField iOSFiles { get; set; }
+		NSTextField iOSFiles { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField iOSLOC { get; set; }
+		NSTextField iOSLOC { get; set; }
               
 		[Outlet]
-        AppKit.NSTextField UWPFiles { get; set; }
+        NSTextField UWPFiles { get; set; }
 
         [Outlet]
-        AppKit.NSTextField UWPLOC { get; set; }            
+        NSTextField UWPLOC { get; set; }            
 
 		[Outlet]
-		AppKit.NSProgressIndicator ProgressBar { get; set; }
+		NSProgressIndicator ProgressBar { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField ShareCodeInAndroid { get; set; }
+		NSTextField ShareCodeInAndroid { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField ShareCodeIniOS { get; set; }
+		NSTextField ShareCodeIniOS { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField ShareCodeInUWP { get; set; }
+		NSTextField ShareCodeInUWP { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField ShareLink { get; set; }
+		NSTextField ShareLink { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField AndroidSpecificCode { get; set; }
+		NSTextField AndroidSpecificCode { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField iOSSpecificCode { get; set; }
+		NSTextField iOSSpecificCode { get; set; }
 
 		[Outlet]
-        AppKit.NSTextField UWPSpecificCode { get; set; }
+        NSTextField UWPSpecificCode { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField TotalLOC { get; set; }
+		NSTextField TotalLOC { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField TotalUILines { get; set; }
+		NSTextField TotalUILines { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField UIFiles { get; set; }
+		NSTextField UIFiles { get; set; }
 
 		[Action ("ButtonOpenFileClick:")]
-		partial void ButtonOpenFileClick (Foundation.NSObject sender);
+		partial void ButtonOpenFileClick (NSObject sender);
 
 		[Action ("ButtonShareLinkClick:")]
-		partial void ButtonShareLinkClick (Foundation.NSObject sender);
+		partial void ButtonShareLinkClick (NSObject sender);
 
 		[Action ("ShareLinkClick:")]
-		partial void ShareLinkClick (Foundation.NSObject sender);
+		partial void ShareLinkClick (NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
